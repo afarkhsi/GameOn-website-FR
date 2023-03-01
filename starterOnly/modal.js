@@ -141,7 +141,7 @@ function validate() {
     erreur=true;
   }
 
-  if(!prenomValide() === false && !nomValide() === false && !emailValide() === false && !nbTournoisValide() === false && !localisationValide(localisations) === false && !checkboxObligatoryValide(checkboxObligatory) === false) {
+  if(!prenomValide() === false && !nomValide() === false && !emailValide() === false && !naissanceValide (naissance) === false && !nbTournoisValide() === false && !localisationValide(localisations) === false && !checkboxObligatoryValide(checkboxObligatory) === false) {
     form.style.display = "none";
     formValidation.style.display = "block";
   }
