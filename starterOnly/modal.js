@@ -11,56 +11,77 @@ function editNav() {
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
-  // Ajouts ciblage html
+  // Ajouts DOM Elements
 const closeBtn = document.querySelectorAll(".close");
-const form = document.querySelector(".form")
+const form = document.querySelector(".form");
+const formValidation = document.querySelector(".validation-message")
+const closeFormValidation = document.querySelector("#close-validation")
 const prenom = document.querySelector('#first');
 const nom = document.querySelector("#last");
 const email = document.querySelector("#email");
-const anniversaire = document.querySelector("#birthdate");
+const naissance = document.querySelector("#birthdate");
 const nbTournois = document.querySelector("#quantity");
 const localisations = document.querySelectorAll('input[name="location"]');
 const checkboxObligatory = document.querySelector("#checkbox1");
-const checkboxOptional = document.querySelector("#checkbox2");
 
-// launch modal event
+// LAUNCH MODAL EVENT
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
-// launch modal form
+// LAUNCH MODAL FORM
 function launchModal() {
   form.reset();
   formData.forEach((data) => data.setAttribute("data-error-visible", "unset"));
   email.value=null;
-  anniversaire.value=null;
+  naissance.value=null;
   nbTournois.value = null;
   localisations.value =undefined;
+  formValidation.style.display = "none";
   form.style.display = "block";
   modalbg.style.display = "block";
 }
 
-// close modal form
+// CLOSE MODAL FORM
 function closeModal() {
   modalbg.style.display = "none";
 }
 
-// close modal event
+// CLOSE MODAL EVENT
 closeBtn.forEach((btn) => btn.addEventListener("click", closeModal));
+closeFormValidation.addEventListener("click", closeModal);
 
-// form submit
+// FORM SUBMIT
 form.addEventListener('submit', function(event) {
   event.preventDefault();
   validate();
 })
 
-// fonctions inputs minimum value requises
-const prenomValide = () => prenom.value.trim().length >= 2;
-const nomValide = () => nom.value.trim().length >= 2;
+// AJOUT DES FONCTIONS DE CONTROLE DES SAISIES DANS LES INPUTS
+const prenomValide = () => (prenom.value.trim().length >= 2);
+const nomValide = () => (nom.value.trim().length >= 2);
 let regexEmail = /^[a-zA-Z][a-zA-Z0-9\-\_\.]+@[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}$/;
 const emailValide = () => regexEmail.test(email.value);
-const regexNaissance = /^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/;
-const naissanceValide = () => regexNaissance.test(anniversaire.value);
 const regexNbTournois = /^\d+$/;
 const nbTournoisValide = () => regexNbTournois.test(nbTournois.value);
+function naissanceValide (naissance) {
+  if(naissance.value == "") {
+    formData[3].setAttribute("data-error-visible", "true");
+    return false
+  } else {
+    let birthdate = new Date(naissance.value);
+    let today = new Date();
+    if(
+      birthdate.getDate() >= today.getDate() &&
+      birthdate.getMonth() == today.getMonth() &&
+      birthdate.getFullYear() == today.getFullYear()
+    ) {
+      formData[3].setAttribute("data-error-visible", "true");
+      return false
+    } else {
+      formData[3].setAttribute("data-error-visible", "false");
+      return true
+    }
+  }
+}
 
 function localisationValide (localisations){
   for (let localisation of localisations) {
@@ -82,9 +103,8 @@ function checkboxObligatoryValide (checkboxObligatory) {
   return false
 }
 
-// create an object to save all users inputs values
-let dataSaving = {};
 
+// FONCTION DE VERIFICATION DE LA VALIDITÉ DU FORM
 function validate() {
   let erreur=false;
   if(!prenomValide()) {
@@ -105,11 +125,8 @@ function validate() {
   } else {
     formData[2].setAttribute("data-error-visible", "false");
   }
-  if(!naissanceValide()) {
-    formData[3].setAttribute("data-error-visible", "true");
+  if(!naissanceValide (naissance)) {
     erreur=true;
-  } else {
-    formData[3].setAttribute("data-error-visible", "false");
   }
   if(!nbTournoisValide()) {
     formData[4].setAttribute("data-error-visible", "true");
@@ -124,25 +141,8 @@ function validate() {
     erreur=true;
   }
 
-  // if(!erreur) {
-  //   // dataSaving = {
-  //   //   prenom,
-  //   //   nom,
-  //   //   email,
-  //   //   nbTournois,
-  //   //   naissance,
-  //   //   localisations,
-  //   // };
-
-  //   form.style.display = "none";
-  // }
   if(!prenomValide() === false && !nomValide() === false && !emailValide() === false && !nbTournoisValide() === false && !localisationValide(localisations) === false && !checkboxObligatoryValide(checkboxObligatory) === false) {
     form.style.display = "none";
+    formValidation.style.display = "block";
   }
 }
-
-console.log(prenom.value)
-console.log(nom.value)
-console.log(email.value)
-console.log(nbTournois.value)
-console.log(localisations.value)
