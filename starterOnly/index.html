@@ -94,23 +94,25 @@
                 /><br>
               </div>
               <div
-                class="formData">
+                class="formData" data-error="Veuillez entrer une date de naissance">
                 <label for="birthdate">Date de naissance</label><br>
                 <input
                   class="text-control"
                   type="date"
                   id="birthdate"
                   name="birthdate"
+                  min ="1901-01-01"
+                  max =""
                 /><br>
               </div>
               <div
-                class="formData">
+                class="formData" data-error="Veuillez saisir un nombre entre 0 et 99">
                 <label for="quantity">À combien de tournois GameOn avez-vous déjà participé ?</label><br>
                 <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99">
               </div>
               <p class="text-label">A quel tournoi souhaitez-vous participer cette année ?</p>
               <div
-                class="formData">
+                class="formData" data-error="Veuillez faire un choix">
                 <input
                   class="checkbox-input"
                   type="radio"
@@ -180,7 +182,7 @@
               </div>
 
               <div
-                class="formData">
+                class="formData" data-error="Vous devez accepter les conditions d'utilisations">
                 <input
                   class="checkbox-input"
                   type="checkbox"
@@ -192,6 +194,11 @@
                   <span class="checkbox-icon"></span>
                   J'ai lu et accepté les conditions d'utilisation.
                 </label>
+                <!-- <span
+                  class="formData-conditions-generales"
+                  id="conditions-generales"
+                  
+                ></span> -->
                 <br>
                 <input class="checkbox-input" type="checkbox" id="checkbox2" />
                 <label class="checkbox2-label" for="checkbox2">
