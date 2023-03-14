@@ -67,6 +67,10 @@ img {
 .topnav .icon {
   display: none;
 }
+.topnav img {
+  width: auto;
+  height: auto;
+}
 
 
 

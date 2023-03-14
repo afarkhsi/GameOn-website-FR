@@ -30,7 +30,7 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 // LAUNCH MODAL FORM
 function launchModal() {
   form.reset();
-  formData.forEach((data) => data.setAttribute("data-error-visible", "unset"));
+  formData.forEach((data) => data.setAttribute("data-error-visible", "false"));
   email.value=null;
   naissance.value=null;
   nbTournois.value = null;
@@ -146,3 +146,4 @@ function validate() {
     formValidation.style.display = "block";
   }
 }
+
